@@ -67,4 +67,7 @@ public:
 	void info(const char* msg, ...);
 	void debug(const char* msg, ...);
 };
+
+extern LoggerFactory *loggerFactory;
+
 #endif /* LOGGER_H_ */

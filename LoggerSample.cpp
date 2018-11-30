@@ -3,6 +3,8 @@
 
 Logger *loggerA;
 Logger *loggerB;
+LoggerFactory *loggerFactory;
+
 //The setup function is called once at startup of the sketch
 void setup()
 {
@@ -13,12 +15,11 @@ void setup()
 			LoggerInst("B",LOG_LEVEL_INFOS)
 	};
 
-	LoggerFactory loggerFactory = LoggerFactory(loggerInstance,true);
+	loggerFactory = new LoggerFactory(loggerInstance,2, true);
 	Serial.println("creating loggers...");
-	loggerA = loggerFactory.getLogger("A"); // only log errors
-	loggerB = loggerFactory.getLogger("B"); // default is log everything
+	loggerA = loggerFactory->getLogger("A"); // only log errors
+	loggerB = loggerFactory->getLogger("B"); // default is log everything
 	Serial.println("end setup");
-
 }
 
 // The loop function is called in an endless loop
