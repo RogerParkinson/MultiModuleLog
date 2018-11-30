@@ -8,7 +8,7 @@ Arduino library for logging to Serial. It is modelled (slightly) on Java's slf4j
  * Use a format string and optional extra arguments to merge into the format string before output.
  * Don't do any merging until we know this call will actually log.
  * Multiple Loggers, each with a different name and each can have a different logging level.
- * Optionally wait for Serial to conect before contineing.
+ * Optionally wait for Serial to conect before contining.
  * Obviously don't log if the level doesn't match the call.
  
 ## Why another logging library?
