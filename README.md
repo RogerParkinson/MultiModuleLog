@@ -1,6 +1,7 @@
 # ArduinoLogger
 
-[![Build Status](https://travis-ci.org/oxullo/Arduino-MAX30100.svg?branch=master)](https://travis-ci.org/oxullo/Arduino-MAX30100)
+[![build_status](https://travis-ci.org/RogerParkinson/ArduinoLogger.svg?branch=master)](https://travis-ci.org/RogerParkinson/ArduinoLogger)
+[![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
 
 Arduino library for logging to Serial. It is modelled (slightly) on Java's slf4j. Notably:
 
@@ -52,7 +53,7 @@ loggerA->debug("debug message\n");
 
 Each Logger is very light weight so you can create them cheaply. All the smart stuff is in the LoggerFactory singleton.
 
-Because the configuration set A to only log errors that call to debug will be suppressed.
+Because the configuration for A will only log errors that call to debug will be suppressed.
 
 ## Formatting
 
@@ -114,3 +115,8 @@ void setup() {
 	loggerA = loggerFactory->getLogger("A");
 	...
 ```
+
+## Credit
+
+Based on Arduino-logging-library by 
+* [/mrRobot62](https://github.com/mrRobot62)  
