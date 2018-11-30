@@ -1,0 +1,19 @@
+{
+	"name": "ArduinoLogger",
+	"keywords": "logging, debug, log, log levels",
+	"description": "Supports formatting, logging levels and logging from different modules (with different levels).",
+	"version": "0.0.1",
+	"authors": {
+		"name": "Roger Parkinson",
+		"url": "https://github.com/RogerParkinson",
+		"maintainer": true
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/RogerParkinson/ArduinoLogger"
+	},
+	"homepage": "https://github.com/RogerParkinson/ArduinoLogger/",
+	"frameworks": ["arduino"],
+	"platforms": "*",
+	"examples": "examples/*/*.ino"
+}
