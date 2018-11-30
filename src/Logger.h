@@ -40,9 +40,15 @@ private:
 	LoggerInst *m_LoggerInstance;
 	int m_count;
 public:
-	LoggerFactory(LoggerInst *loggerInstance, int count) {
+	LoggerFactory(LoggerInst *loggerInstance, int count) : LoggerFactory(loggerInstance,count,false){}
+	LoggerFactory(LoggerInst *loggerInstance, int count, bool wait) {
 		m_LoggerInstance = loggerInstance;
 		m_count = count;
+		if (wait) {
+			while (!Serial) {
+			    ; // wait for serial port to connect. Needed for native USB
+			}
+		}
 	}
 	Logger *getLogger(const char *name);
 	void print(const char* msg, va_list args);
@@ -61,5 +67,4 @@ public:
 	void info(const char* msg, ...);
 	void debug(const char* msg, ...);
 };
-
 #endif /* LOGGER_H_ */

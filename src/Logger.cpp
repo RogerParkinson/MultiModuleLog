@@ -52,10 +52,10 @@ int LoggerFactory::figureLevel(const char *name) {
 		int cmp = strcmp(m_LoggerInstance[i].getName(),name);
 		if (cmp == 0) {
 			ret = m_LoggerInstance[i].getLevel();
-			Serial.print("using level ");
-			Serial.print(ret);
-			Serial.print(" for ");
-			Serial.println(name);
+//			Serial.print("using level ");
+//			Serial.print(ret);
+//			Serial.print(" for ");
+//			Serial.println(name);
 			return ret;
 		}
 	}

@@ -391,7 +391,7 @@ environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.COM_PORT/
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.COM_PORT/value=/dev/ttyACM0
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.ECLIPSE_LOCATION/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.ECLIPSE_LOCATION/operation=replace
-environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.ECLIPSE_LOCATION/value=${eclipse_home}
+environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.ECLIPSE_LOCATION/value=${eclipse_home}/
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.EXTRA.ALL/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.EXTRA.ALL/operation=replace
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.EXTRA.ALL/value=
@@ -427,7 +427,7 @@ environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.PACKAGE_I
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.PACKAGE_ID/value=teensy
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.PROJECT_NAME/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.PROJECT_NAME/operation=replace
-environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.PROJECT_NAME/value=LoggerSample
+environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.PROJECT_NAME/value=ArduinoLogger
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.SELECTED.PLATFORM/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.SELECTED.PLATFORM/operation=replace
 environment/project/io.sloeber.core.toolChain.release.885400444/JANTJE.SELECTED.PLATFORM/value=/home/roger/Arduino/hardware/teensy/avr
