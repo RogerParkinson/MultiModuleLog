@@ -14,7 +14,8 @@
     "sudo cp -r arduino-1.8.3 /usr/local/share/arduino",
     "sudo rm /usr/local/bin/arduino",
     "sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino",
-    "sudo ln -s $PWD /usr/local/share/arduino/libraries/ArduinoLogger",    
+    "sudo ln -s $PWD /usr/local/share/arduino/libraries/ArduinoLogger",   
+    "sudo rm -R .settings", 
     "arduino --verify --board arduino:avr:uno $PWD/examples/LoggerSample.ino"
   ],
   "group": "stable",
