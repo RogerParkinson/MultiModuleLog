@@ -8,7 +8,10 @@ void setup()
 {
 	Serial.begin(9600);
 	Serial.println("start setup");
-	LoggerInst *loggerInstance = {new LoggerInst("A",LOG_LEVEL_ERRORS)};
+	LoggerInst loggerInstance[] = {
+			LoggerInst("A",LOG_LEVEL_ERRORS),
+			LoggerInst("B",LOG_LEVEL_INFOS)
+	};
 	LoggerFactory loggerFactory = LoggerFactory(loggerInstance,1);
 	Serial.println("creating loggers...");
 	loggerA = loggerFactory.getLogger("A"); // only log errors
@@ -24,7 +27,9 @@ void loop()
 	int myInt1 = 232;
 	int myInt2 = 32199;
 
-	loggerA->info("A Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
-	loggerB->info("B Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be visible
+	loggerA->info("error Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
+	loggerA->debug("debug message\n"); // Should be suppressed
+	loggerB->info("info Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be visible
+	loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
 	delay(10000);
 }

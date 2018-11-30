@@ -8,7 +8,6 @@
 #define _LoggerSample_H_
 #include "Arduino.h"
 //add your includes for the project LoggerSample here
-#include "LoggerFactory.h"
 #include "Logger.h"
 
 //end of add your includes here
