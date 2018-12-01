@@ -115,6 +115,12 @@ void setup() {
 	loggerA = loggerFactory->getLogger("A");
 	...
 ```
+## Install
+
+ * Download latest from Github
+ * Extract it to the libraries folder inside your Sketchbook. Default is [user]\Arduino\libraries.
+ * Restart Arduino IDE if you had it open.
+ * Done
 
 ## Credit
 
