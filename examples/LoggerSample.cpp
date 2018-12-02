@@ -1,5 +1,5 @@
 // Do not remove the include below
-#include "Logger.h"
+//#include "Logger.h"
 #include "TestObject.h"
 
 Logger *loggerA;
