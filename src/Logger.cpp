@@ -7,12 +7,13 @@
 
 #include "Logger.h"
 
-Logger::Logger(int level,const char *name, LoggerFactory *loggerFactory) {
-	m_level = level;
+Logger::Logger(const char *name, LoggerFactory *loggerFactory) {
+	m_level = LOG_UNCONFIGURED;
 	m_loggerFactory = loggerFactory;
 	m_name = name;
 }
 void Logger::error(const char *msg, ...) {
+	figureLevel();
 	if (LOG_LEVEL_ERRORS <= m_level) {
 		printName();
         va_list args;
@@ -21,6 +22,7 @@ void Logger::error(const char *msg, ...) {
 	}
 }
 void Logger::info(const char *msg, ...) {
+	figureLevel();
 	if (LOG_LEVEL_INFOS <= m_level) {
 		printName();
         va_list args;
@@ -29,6 +31,7 @@ void Logger::info(const char *msg, ...) {
 	}
 }
 void Logger::debug(const char *msg, ...) {
+	figureLevel();
 	if (LOG_LEVEL_DEBUG <= m_level) {
 		printName();
         va_list args;
@@ -36,30 +39,60 @@ void Logger::debug(const char *msg, ...) {
         m_loggerFactory->print(msg,args);
 	}
 }
+
+void Logger::figureLevel() {
+	if (m_level == LOG_UNCONFIGURED) {
+		m_level = m_loggerFactory->figureLevel(m_name);
+	}
+}
+
 void Logger::printName() {
 	Serial.print("[");
 	Serial.print(m_name);
 	Serial.print("]");
 }
+
+void LoggerFactory::add(LoggerInst *loggerInst) {
+	if (m_LoggerInstance == NULL) {
+		m_LoggerInstance = loggerInst;
+		return;
+	}
+	loggerInst->m_loggerInstance = m_LoggerInstance;
+	m_LoggerInstance = loggerInst;
+}
+
 Logger *LoggerFactory::getLogger(const char *name) {
-	int level = figureLevel(name);
-	return new Logger(level, name, this);
+	return new Logger(name, this);
 }
 
 int LoggerFactory::figureLevel(const char *name) {
-	int ret = LOG_LEVEL_EVERYTHING; // ie everything
-	for (int i=0;i<m_count;i++) {
-		int cmp = strcmp(m_LoggerInstance[i].getName(),name);
+	int ret = LOG_UNCONFIGURED; // ie everything
+	LoggerInst *inst = m_LoggerInstance;
+	while (inst != NULL) {
+		int cmp = strcmp(inst->getName(),name);
 		if (cmp == 0) {
-			ret = m_LoggerInstance[i].getLevel();
-//			Serial.print("using level ");
-//			Serial.print(ret);
-//			Serial.print(" for ");
-//			Serial.println(name);
+			ret = inst->getLevel();
+			Serial.print("using level ");
+			Serial.print(ret);
+			Serial.print(" for ");
+			Serial.println(name);
 			return ret;
 		}
+		inst = inst->m_loggerInstance;
 	}
 	return ret;
+}
+
+void LoggerFactory::dump() {
+	LoggerInst *inst = m_LoggerInstance;
+	Serial.print("Dumping log configuration");
+	while (inst != NULL) {
+		Serial.print("using level ");
+		Serial.print(inst->getLevel());
+		Serial.print(" for ");
+		Serial.println(inst->getName());
+		inst = inst->m_loggerInstance;
+	}
 }
 /*
  * This code was taken from https://github.com/mrRobot62/Arduino-logging-library
