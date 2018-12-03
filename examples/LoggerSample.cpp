@@ -4,20 +4,17 @@
 
 Logger *loggerA;
 Logger *loggerB;
-LoggerFactory loggerFactory = LoggerFactory();
+LoggerFactory loggerFactory = LoggerFactory(true);
 
 void setup()
 {
 	Serial.begin(9600);
-	Serial.println("start setup");
 	// Configure the loggers, including the one for TestObject
 	loggerFactory.add(new LoggerInst("A",LOG_LEVEL_ERRORS));
 	loggerFactory.add(new LoggerInst("B",LOG_LEVEL_INFOS));
 	loggerFactory.add(new LoggerInst("TestObject",LOG_LEVEL_INFOS));
-	Serial.println("creating loggers...");
 	loggerA = loggerFactory.getLogger("A"); // only log errors
 	loggerB = loggerFactory.getLogger("B"); // default is log everything
-	Serial.println("end setup");
 
 }
 

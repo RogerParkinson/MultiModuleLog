@@ -15,7 +15,7 @@ Logger::Logger(const char *name, LoggerFactory *loggerFactory) {
 void Logger::error(const char *msg, ...) {
 	figureLevel();
 	if (LOG_LEVEL_ERRORS <= m_level) {
-		printName();
+		printName("error");
         va_list args;
         va_start(args, msg);
         m_loggerFactory->print(msg,args);
@@ -24,7 +24,7 @@ void Logger::error(const char *msg, ...) {
 void Logger::info(const char *msg, ...) {
 	figureLevel();
 	if (LOG_LEVEL_INFOS <= m_level) {
-		printName();
+		printName("info");
         va_list args;
         va_start(args, msg);
         m_loggerFactory->print(msg,args);
@@ -33,7 +33,7 @@ void Logger::info(const char *msg, ...) {
 void Logger::debug(const char *msg, ...) {
 	figureLevel();
 	if (LOG_LEVEL_DEBUG <= m_level) {
-		printName();
+		printName("debug");
         va_list args;
         va_start(args, msg);
         m_loggerFactory->print(msg,args);
@@ -46,9 +46,12 @@ void Logger::figureLevel() {
 	}
 }
 
-void Logger::printName() {
+void Logger::printName(const char*level) {
 	Serial.print("[");
 	Serial.print(m_name);
+	Serial.print("]");
+	Serial.print("[");
+	Serial.print(level);
 	Serial.print("]");
 }
 
@@ -72,10 +75,10 @@ int LoggerFactory::figureLevel(const char *name) {
 		int cmp = strcmp(inst->getName(),name);
 		if (cmp == 0) {
 			ret = inst->getLevel();
-			Serial.print("using level ");
-			Serial.print(ret);
-			Serial.print(" for ");
-			Serial.println(name);
+//			Serial.print("using level ");
+//			Serial.print(ret);
+//			Serial.print(" for ");
+//			Serial.println(name);
 			return ret;
 		}
 		inst = inst->m_loggerInstance;
@@ -85,7 +88,7 @@ int LoggerFactory::figureLevel(const char *name) {
 
 void LoggerFactory::dump() {
 	LoggerInst *inst = m_LoggerInstance;
-	Serial.print("Dumping log configuration");
+	Serial.println("Dumping log configuration");
 	while (inst != NULL) {
 		Serial.print("using level ");
 		Serial.print(inst->getLevel());

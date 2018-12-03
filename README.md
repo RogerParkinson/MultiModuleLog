@@ -81,10 +81,10 @@ The logger knows what level it was configured to accept and it prints messages f
 
 ## Formatting
 
-It is worth saying here that the logger *never* prints a new line. If you want a new line then add a \\n to the end. It always prints the module name at the start of the line (or at the start of each call) so the debug message above will look like this:
+It is worth saying here that the logger *never* prints a new line. If you want a new line then add a \\n to the end. It always prints the module name and the level at the start of the line (or at the start of each call) so the debug message above will look like this:
 
 ```
-[A] debug message
+[A][debug] debug message
 ```
 
 That way you know where the message came from.
@@ -151,7 +151,17 @@ This means we don't have to be very careful about initialising the LoggerFactory
 
 If you look at the sample file in the zip you will see it omits the TestObject files. As far as I can tell the Arduino IDE does not like samples that aren't a single ino file so it did not work when I added TestObject. So the distributed sample is cut down from the one shown here.
 
-However the project in github has the full sample with the TestObject. 
+However the project in github has the full sample with the TestObject.
+
+You can display the whole logging configuration to Serial by calling LoggerFactory.dump().
+
+If you want your code to wait for a Serial connection before it starts logging just add a 'true' argument to the LoggerFactory like this:
+
+```
+LoggerFactory loggerFactory = LoggerFactory(true);
+```
+
+This will cause everything to wait until you have opened up your logging monitor.
 
 ## Build
 

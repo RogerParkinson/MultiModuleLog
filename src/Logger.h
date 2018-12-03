@@ -68,7 +68,7 @@ private:
 	LoggerFactory *m_loggerFactory;
 	int m_level;
 	const char* m_name;
-	void printName();
+	void printName(const char *level);
 	void figureLevel();
 protected:
 	Logger(const char *name,LoggerFactory *loggerFactory);
