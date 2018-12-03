@@ -155,15 +155,17 @@ However the project in github has the full sample with the TestObject.
 
 ## Build
 
-To build this I use the [Sloeber](http://eclipse.baeyens.it/index.shtml). This is a free IDE based on Eclipse that supports Arduino and, of course, Teensy. I say free because you can use it for free, but you should do the right thing and support Jante's hard work on his Patreon.
+To build this I use [Sloeber](http://eclipse.baeyens.it/index.shtml). This is a free IDE based on Eclipse that supports Arduino and, of course, Teensy. I say free because you can use it for free, but you should do the right thing and support Jante's hard work on his Patreon.
+
+Clone the repo from [github](https://github.com/RogerParkinson/ArduinoLogger) and build the project. You can flash the sample code to your device fro there. The project is configured for Teensy 3.2 by default so adjust athat as needed.
 
 Once built I also run the distribute.sh file which will copy the files you actually need to your ~/Arduino/libraries directory, it also tidies up the sample so it can run as a single file (ie without TestObject).
 
 ## Install
 
- * Download latest from Github
- * Extract it to the libraries folder inside your Sketchbook. Default is [user]\Arduino\libraries.
- * Restart Arduino IDE if you had it open.
+ * Download zip from [madura](https://www.madurasoftware.com/ArduinoLogger.zip) or pull it from github and build it yourself (see above).
+ * Import the zip file into your Arduino IDE
+ * Restart your IDE if you had it open. Both Arduino and Sloeber will then be able to find the library.
  * Done
 
 ## Credit
