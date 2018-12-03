@@ -60,17 +60,21 @@ loggerA = loggerFactory.getLogger("A"); // only log errors
 loggerB = loggerFactory.getLogger("B"); // default is log everything
 ```
 
-This configures two loggers, naming the (A and B) and giving each a logging level. Each Logger is very light weight so you can create them cheaply. All the smart stuff is in the LoggerFactory singleton. Now lets do some logging:
+This configures two loggers, naming the (A and B) and giving each a logging level. Each Logger is very light weight so you can create them cheaply. All the smart stuff is in the LoggerFactory singleton. 
+
+## Usage
+
+Now lets do some logging:
 
 ```
 int myInt1 = 232;
 int myInt2 = 32199;
 TestObject t; // TestObject has its own logger
 
-loggerA->info("error Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
-loggerA->debug("debug message\n"); // Should be suppressed
-loggerB->info("info Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be visible
-loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
+loggerA->info("error Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be suppressed
+loggerA->debug("debug message"); // Should be suppressed
+loggerB->info("info Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be visible
+loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be suppressed
 t.testMethod();
 ```
 
@@ -78,16 +82,28 @@ Ignore TestObject for now, notice LoggerA and LoggerB are being called to log di
 
 The logger knows what level it was configured to accept and it prints messages for that level and above. So LoggerA will only print messages for *error* and will ignore the *info* message sent here. Importantly it will not try formatting messages that it is going to ignore, so there is little overhead for messages that are turned off. LoggerB is set to print *info* messages so it will print the first message but not the second which is a *debug* message.
 
+Ideally your logging messages are never more complext than this but sometimes they might be and if you need to you can query the current log level like this:
+
+```
+if (loggerA->isDebug()) {
+	... 
+	some resource heavy operation
+	...
+	loggerA->debug(...) // log the result
+} 
+```
+
+Being able to query the logging level of the logger allows you to skip the resource heavy operation when you wouldn't logi it anyway.
 
 ## Formatting
 
-It is worth saying here that the logger *never* prints a new line. If you want a new line then add a \\n to the end. It always prints the module name and the level at the start of the line (or at the start of each call) so the debug message above will look like this:
+It is worth saying here that the logger always prints a new line at the end. It also always prints the module name and the level at the start of the line (or at the start of each call) so the debug message above will look like this:
 
 ```
 [A][debug] debug message
 ```
 
-That way you know where the message came from.
+That way you know where the message came from. You can add new line characters in your format strings and those will give new lines without the above prefixes.
 
 The formatting is always done *after* the decision is made to go ahead and log, this is important because we don't want to consume resources formatting things that we won't be printing.
 

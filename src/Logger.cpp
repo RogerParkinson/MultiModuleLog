@@ -169,6 +169,7 @@ void LoggerFactory::print(const char* format, va_list args) {
 		}
 		Serial.print(*format);
 	}
+	Serial.println();
  }
 
 

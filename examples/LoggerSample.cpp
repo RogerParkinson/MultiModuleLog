@@ -25,10 +25,10 @@ void loop()
 	int myInt2 = 32199;
 	TestObject t; // TestObject has its own logger
 
-	loggerA->info("error Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
-	loggerA->debug("debug message\n"); // Should be suppressed
-	loggerB->info("info Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be visible
-	loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
+	loggerA->info("error Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be suppressed
+	loggerA->debug("debug message"); // Should be suppressed
+	loggerB->info("info Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be visible
+	loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be suppressed
 	t.testMethod();
 	loggerFactory.dump();
 	delay(5000);

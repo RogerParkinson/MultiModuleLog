@@ -76,6 +76,9 @@ public:
 	void error(const char* msg, ...);
 	void info(const char* msg, ...);
 	void debug(const char* msg, ...);
+	boolean isError() {return LOG_LEVEL_ERRORS <= m_level;}
+	boolean isInfo() {return LOG_LEVEL_INFOS <= m_level;}
+	boolean isDebug() {return LOG_LEVEL_DEBUG <= m_level;}
 };
 
 extern LoggerFactory loggerFactory;
