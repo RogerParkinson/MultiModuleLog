@@ -13,9 +13,9 @@ Arduino library for logging to Serial. It is modelled (slightly) on Java's slf4j
  
 ## Why another logging library?
 
-It is true there are several others out there. I really liked Arduino-logging-library for its format strings and merging arguments and I grabbed that code for this.
+It is true there are several others out there. I really liked Arduino-logging-library for its format strings and merging arguments and I grabbed that code for this (see credit below).
 
-But none of them (that I found) support multiple loggers. This makes sense, most Arduino projects are too small to need them. But the ones I write tend to have lots of objects and when you have more than 10 you want to be able turn off sections of the logging based on the class or module or similar while leaving the other logging on.
+But none of them (that I found) support multiple loggers. This makes sense, most Arduino projects are too small to need them. But the ones I write tend to have lots of objects and when you have more than 10 files you want to be able turn off sections of the logging based on the class or module or similar while leaving the other logging on.
 
 That's what this does. You create a logger for, say, a class and use that to log everything for that class. When you no longer need logging for that class you set its logging to a lower level and keep any other loggers untouched.
 
@@ -31,29 +31,53 @@ The log levels are:
  * Debug
  * Everything (which is the default if you don't give a level).
 
-You set these by configuring the LogFactory like this:
+Start with this:
 
 ```
-LoggerFactory *loggerFactory;
-LoggerInst loggerInstance[] = {
-		LoggerInst("A",LOG_LEVEL_ERRORS),
-		LoggerInst("B",LOG_LEVEL_INFOS)
-};
-loggerFactory = new LoggerFactory(loggerInstance,2,true);
+#include <Logger.h>
+#include "TestObject.h"
+
+Logger *loggerA;
+Logger *loggerB;
+LoggerFactory loggerFactory = LoggerFactory();
 ```
 
-This configures two loggers, naming the (A and B) and giving each a logging level. Then we create a new LoggerFactory passing the configuration, the number of lines and, optionally, a flag to wait until the Serial Monitor is connected before going on.
+Include the library file. In this case I have another file that defines a class called TestObject and I include that too. You'll see why later.
+Then I've declared two different Logger variables as well as the logger factory.
 
-After that each module should create its own logger like this:
+Somewhere near the top of your setup() function do something like this:
 
 ```
-Logger *loggerA = loggerFactory->getLogger("A");
-loggerA->debug("debug message\n");
+Serial.begin(9600);
+// Configure the loggers, including the one for TestObject. 
+// Come back here when you want to turn logging on/off
+loggerFactory.add(new LoggerInst("A",LOG_LEVEL_ERRORS));
+loggerFactory.add(new LoggerInst("B",LOG_LEVEL_INFOS));
+loggerFactory.add(new LoggerInst("TestObject",LOG_LEVEL_INFOS));
+
+// Now create the two Loggers (but not the one for TestObject)
+loggerA = loggerFactory.getLogger("A"); // only log errors
+loggerB = loggerFactory.getLogger("B"); // default is log everything
 ```
 
-Each Logger is very light weight so you can create them cheaply. All the smart stuff is in the LoggerFactory singleton.
+This configures two loggers, naming the (A and B) and giving each a logging level. Each Logger is very light weight so you can create them cheaply. All the smart stuff is in the LoggerFactory singleton. Now lets do some logging:
 
-Because the configuration for A will only log errors that call to debug will be suppressed.
+```
+int myInt1 = 232;
+int myInt2 = 32199;
+TestObject t; // TestObject has its own logger
+
+loggerA->info("error Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
+loggerA->debug("debug message\n"); // Should be suppressed
+loggerB->info("info Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be visible
+loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d\n",myInt1,myInt2); // Should be suppressed
+t.testMethod();
+```
+
+Ignore TestObject for now, notice LoggerA and LoggerB are being called to log different kinds of messages. These correspond to the log levels. But first notice that each call is able to use a format string and a list of arguments. There is a section below on formatting.
+
+The logger knows what level it was configured to accept and it prints messages for that level and above. So LoggerA will only print messages for *error* and will ignore the *info* message sent here. Importantly it will not try formatting messages that it is going to ignore, so there is little overhead for messages that are turned off. LoggerB is set to print *info* messages so it will print the first message but not the second which is a *debug* message.
+
 
 ## Formatting
 
@@ -85,36 +109,56 @@ This is using the code from Arduino-logging-library, and this is the full list o
  * %B like x but combine with 0b10100011
  * %t replace and convert boolean value into "t" or "f"
  * %T like t but convert into "true" or "false"
+ 
+As with printf if you mismatch your format rags and your arguments there will be strange errors, so take some care to get them right.
 
 ## Multiple files
 
-The whole point of this is to make it easier to manage logging when you have lots of files with logging spread all over them. So it is worth making sure you know how to manage that.
-
-In your main file, the one with setup() and Loop() you need to have this:
-```
-#include <Logger.h>
-...
-LoggerFactory *loggerFactory;
-```
-
-You should create and configure your LoggerFactory in your setup() method, just after you start your Serial interface. Something like this:
+The whole point of this is to make it easier to manage logging when you have lots of files with logging spread all over them. So it is worth making sure you know how to manage that. The example above showed us using a TestObject. This is in another two files, TestObject.h and TestObject.cpp.
 
 ```
+//TestObject.h
 #include <Logger.h>
 
-LoggerFactory *loggerFactory;
-
-void setup() {
-	Serial.begin(9600);
-	LoggerInst loggerInstance[] = {
-		LoggerInst("A",LOG_LEVEL_ERRORS),
-		LoggerInst("B",LOG_LEVEL_INFOS)
-	};
-
-	loggerFactory = new LoggerFactory(loggerInstance,2, true);
-	loggerA = loggerFactory->getLogger("A");
-	...
+class TestObject {
+public:
+	TestObject();
+	void testMethod();
+};
 ```
+
+```
+//TestObject.cpp
+#include "TestObject.h"
+
+Logger *loggerTestObject = loggerFactory.getLogger("TestObject");
+
+TestObject::TestObject(){
+}
+void TestObject::testMethod() {
+	loggerTestObject->info("hello\n");
+}
+```
+
+TestObject is a simple object with one method. All the method does is log a message.
+But the Logger in TestObject is controlled by the configuration we set up earlier. If we want to change TestObject's logging we don't need to come back here and change this.
+
+## Advanced Stuff
+
+Internally the individual loggers get lazily configured. When first created they are flagged as unconfigured. The Logger Factory holds the configuration details and the first time a logger is called to print it asks the Logger Factory for its configured level. If there isn't one it remains unconfigured (and logs eveything). Once it gets a configured level it remebers it and no longer asks the Logger Factory.
+
+This means we don't have to be very careful about initialising the LoggerFactory and the loggers in any particular order.
+
+If you look at the sample file in the zip you will see it omits the TestObject files. As far as I can tell the Arduino IDE does not like samples that aren't a single ino file so it did not work when I added TestObject. So the distributed sample is cut down from the one shown here.
+
+However the project in github has the full sample with the TestObject. 
+
+## Build
+
+To build this I use the [Sloeber](http://eclipse.baeyens.it/index.shtml). This is a free IDE based on Eclipse that supports Arduino and, of course, Teensy. I say free because you can use it for free, but you should do the right thing and support Jante's hard work on his Patreon.
+
+Once built I also run the distribute.sh file which will copy the files you actually need to your ~/Arduino/libraries directory, it also tidies up the sample so it can run as a single file (ie without TestObject).
+
 ## Install
 
  * Download latest from Github

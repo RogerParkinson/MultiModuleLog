@@ -1,4 +1,6 @@
 #!/bin/bash
+# copies the files into the arduino library directory, ignoring the ones we don't need there.
+# It modifies the sample to be a single ino file because Arduino IDE seems to not support multiple files in samples.
 
 export LIBDIR=~/Arduino/libraries/ArduinoLogger
 mkdir $LIBDIR/examples
