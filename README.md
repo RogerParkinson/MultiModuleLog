@@ -39,7 +39,7 @@ Start with this:
 
 Logger *loggerA;
 Logger *loggerB;
-LoggerFactory loggerFactory = LoggerFactory();
+LoggerFactory loggerFactory = LoggerFactory(true);
 ```
 
 Include the library file. In this case I have another file that defines a class called TestObject and I include that too. You'll see why later.
@@ -171,13 +171,13 @@ However the project in github has the full sample with the TestObject.
 
 You can display the whole logging configuration to Serial by calling LoggerFactory.dump().
 
-If you want your code to wait for a Serial connection before it starts logging just add a 'true' argument to the LoggerFactory like this:
+The LoggerFactory will wait for a Serial connection before it starts logging. But eventually you will want to stop doing that and turn off all logging. Just do this:
 
 ```
-LoggerFactory loggerFactory = LoggerFactory(true);
+LoggerFactory loggerFactory = LoggerFactory(false);
 ```
 
-This will cause everything to wait until you have opened up your logging monitor.
+This will suppress the wait and turn off all logging. You can actually leave out the argument, it defaults to false.
 
 ## Build
 

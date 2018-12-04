@@ -44,14 +44,16 @@ class LoggerFactory {
 	friend class Logger;
 private:
 	LoggerInst *m_LoggerInstance;
+	boolean m_active;
 protected:
 	int figureLevel(const char *name);
 	void print(const char* msg, va_list args);
 public:
 	LoggerFactory() : LoggerFactory(false){}
-	LoggerFactory(bool wait) {
+	LoggerFactory(bool active) {
+		m_active = active;
 		m_LoggerInstance = NULL;
-		if (wait) {
+		if (active) {
 			while (!Serial) {
 			    ; // wait for serial port to connect. Needed for native USB
 			}

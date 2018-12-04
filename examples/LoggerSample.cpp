@@ -4,10 +4,13 @@
 
 Logger *loggerA;
 Logger *loggerB;
-LoggerFactory loggerFactory = LoggerFactory(true);
+LoggerFactory loggerFactory = LoggerFactory(false);
+
+const int ledPin = 13; // built in LED on teensy 3.2
 
 void setup()
 {
+	pinMode(ledPin, OUTPUT);
 	Serial.begin(9600);
 	// Configure the loggers, including the one for TestObject
 	loggerFactory.add("A",LOG_LEVEL_ERRORS);
@@ -31,5 +34,8 @@ void loop()
 	loggerB->debug("debug Display my integers myInt1 %d, myInt2 %d",myInt1,myInt2); // Should be suppressed
 	t.testMethod();
 	loggerFactory.dump();
-	delay(5000);
+	digitalWrite(ledPin, HIGH);   // set the LED on
+	delay(1000);                  // wait for a second
+	digitalWrite(ledPin, LOW);    // set the LED off
+	delay(1000);                  // wait for a second
 }

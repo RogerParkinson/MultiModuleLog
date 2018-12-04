@@ -70,6 +70,9 @@ Logger *LoggerFactory::getLogger(const char *name) {
 }
 
 int LoggerFactory::figureLevel(const char *name) {
+	if (!m_active) {
+		return LOG_LEVEL_NOOUTPUT;
+	}
 	int ret = LOG_UNCONFIGURED; // ie everything
 	LoggerInst *inst = m_LoggerInstance;
 	while (inst != NULL) {
