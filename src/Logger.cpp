@@ -55,7 +55,8 @@ void Logger::printName(const char*level) {
 	Serial.print("]");
 }
 
-void LoggerFactory::add(LoggerInst *loggerInst) {
+void LoggerFactory::add(const char *name, const int level) {
+	LoggerInst *loggerInst = new LoggerInst(name,level);
 	if (m_LoggerInstance == NULL) {
 		m_LoggerInstance = loggerInst;
 		return;

@@ -25,12 +25,12 @@ protected:
 	int getLevel() {
 		return m_level;
 	}
-public:
 	LoggerInst(const char *name, const int level) {
 		m_loggerInstance = NULL;
 		m_name = name;
 		m_level = level;
 	}
+public:
 };
 
 #define LOG_LEVEL_NOOUTPUT 0
@@ -57,7 +57,7 @@ public:
 			}
 		}
 	}
-	void add(LoggerInst *loggerInst);
+	void add(const char *name, const int level);
 	Logger *getLogger(const char *name);
 	void dump();
 };

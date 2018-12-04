@@ -10,9 +10,9 @@ void setup()
 {
 	Serial.begin(9600);
 	// Configure the loggers, including the one for TestObject
-	loggerFactory.add(new LoggerInst("A",LOG_LEVEL_ERRORS));
-	loggerFactory.add(new LoggerInst("B",LOG_LEVEL_INFOS));
-	loggerFactory.add(new LoggerInst("TestObject",LOG_LEVEL_INFOS));
+	loggerFactory.add("A",LOG_LEVEL_ERRORS);
+	loggerFactory.add("B",LOG_LEVEL_INFOS);
+	loggerFactory.add("TestObject",LOG_LEVEL_INFOS);
 	loggerA = loggerFactory.getLogger("A"); // only log errors
 	loggerB = loggerFactory.getLogger("B"); // default is log everything
 

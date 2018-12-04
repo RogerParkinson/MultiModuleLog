@@ -51,9 +51,9 @@ Somewhere near the top of your setup() function do something like this:
 Serial.begin(9600);
 // Configure the loggers, including the one for TestObject. 
 // Come back here when you want to turn logging on/off
-loggerFactory.add(new LoggerInst("A",LOG_LEVEL_ERRORS));
-loggerFactory.add(new LoggerInst("B",LOG_LEVEL_INFOS));
-loggerFactory.add(new LoggerInst("TestObject",LOG_LEVEL_INFOS));
+loggerFactory.add("A",LOG_LEVEL_ERRORS);
+loggerFactory.add("B",LOG_LEVEL_INFOS);
+loggerFactory.add("TestObject",LOG_LEVEL_INFOS);
 
 // Now create the two Loggers (but not the one for TestObject)
 loggerA = loggerFactory.getLogger("A"); // only log errors
