@@ -1,4 +1,4 @@
-# ArduinoLogger
+# MultiModuleLogger
 
 [![build_status](https://travis-ci.org/RogerParkinson/ArduinoLogger.svg?branch=master)](https://travis-ci.org/RogerParkinson/ArduinoLogger)
 [![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
@@ -126,7 +126,7 @@ This is using the code from Arduino-logging-library, and this is the full list o
  * %t replace and convert boolean value into "t" or "f"
  * %T like t but convert into "true" or "false"
  
-As with printf if you mismatch your format rags and your arguments there will be strange errors, so take some care to get them right.
+As with printf if you mismatch your format tags and your arguments there will be strange errors, so take some care to get them right.
 
 ## Multiple files
 
@@ -183,7 +183,7 @@ This will suppress the wait and turn off all logging. You can actually leave out
 
 To build this I use [Sloeber](http://eclipse.baeyens.it/index.shtml). This is a free IDE based on Eclipse that supports Arduino and, of course, Teensy. I say free because you can use it for free, but you should do the right thing and support Jante's hard work on his Patreon.
 
-Clone the repo from [github](https://github.com/RogerParkinson/ArduinoLogger) and build the project. You can flash the sample code to your device fro there. The project is configured for Teensy 3.2 by default so adjust athat as needed.
+Clone the repo from [github](https://github.com/RogerParkinson/ArduinoLogger) and build the project. You can flash the sample code to your device from there. The project is configured for Teensy 3.2 by default so adjust athat as needed.
 
 Once built I also run the distribute.sh file which will copy the files you actually need to your ~/Arduino/libraries directory, it also tidies up the sample so it can run as a single file (ie without TestObject).
 
