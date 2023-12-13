@@ -2,7 +2,7 @@
 # copies the files into the arduino library directory, ignoring the ones we don't need there.
 # It modifies the sample to be a single ino file because Arduino IDE seems to not support multiple files in samples.
 
-export LIBDIR=~/Arduino/libraries/ArduinoLogger
+export LIBDIR=~/Arduino/libraries/MultiModuleLog
 mkdir $LIBDIR/examples
 #cp -R ./examples/TestObject.* $LIBDIR
 cp ./examples/LoggerSample.cpp $LIBDIR/examples/LoggerSample.ino

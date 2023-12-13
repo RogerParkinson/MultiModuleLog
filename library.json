@@ -1,5 +1,5 @@
 {
-	"name": "ArduinoLogger",
+	"name": "MultiModuleLog",
 	"keywords": "logging, debug, log, log levels",
 	"description": "Supports formatting, logging levels and logging from multiple modules (with different levels).",
 	"version": "1.0.0",
@@ -10,9 +10,9 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/RogerParkinson/ArduinoLogger"
+		"url": "https://github.com/RogerParkinson/MultiModuleLog"
 	},
-	"homepage": "https://github.com/RogerParkinson/ArduinoLogger/",
+	"homepage": "https://github.com/RogerParkinson/MultiModuleLog/",
 	"frameworks": ["arduino"],
 	"platforms": "*",
 	"examples": "examples/*/*.ino"
