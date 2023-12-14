@@ -1,6 +1,5 @@
 # MultiModuleLogger
 
-[![build_status](https://travis-ci.org/RogerParkinson/ArduinoLogger.svg?branch=master)](https://travis-ci.org/RogerParkinson/ArduinoLogger)
 [![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
 
 Arduino library for logging to Serial. It is modelled (slightly) on Java's slf4j. Notably:
@@ -34,7 +33,7 @@ The log levels are:
 Start with this:
 
 ```
-#include <Logger.h>
+#include <MultiModuleLog.h>
 #include "TestObject.h"
 
 Logger *loggerA;
@@ -134,7 +133,7 @@ The whole point of this is to make it easier to manage logging when you have lot
 
 ```
 //TestObject.h
-#include <Logger.h>
+#include <MultiModuleLog.h>
 
 class TestObject {
 public:

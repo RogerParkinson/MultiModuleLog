@@ -1,0 +1,11 @@
+docker run --rm \
+  -v "$HOME/Arduino/libraries:/root/Arduino/libraries" \
+  --workdir /root/Arduino/libraries/MultiModuleLog \
+  --env EXPECT_EXAMPLES=Y \
+  --env EXPECT_UNITTESTS=N \
+  ghcr.io/arduino-ci/action/ubuntu
+  
+https://github.com/marketplace/actions/arduino_ci
+https://arduino.github.io/arduino-lint/1.2/
+https://github.com/arduino/library-registry/blob/main/README.md#adding-a-library-to-library-manager
+
